@@ -28,12 +28,9 @@ import org.springframework.context.annotation.Configuration;
 
 // This annotation tells Spring to auto-wire your application
 @EnableAutoConfiguration
-// This annotation tells Spring to look for controllers, etc.
-// starting in the current package
+// This annotation tells Spring to look for controllers, etc. starting in the current package
 @ComponentScan
-//This annotation tells Spring that this class contains configuration
-//information
-//for the application.
+// This annotation tells Spring that this class contains configuration information for the application.
 @Configuration
 public class Application {
 
@@ -51,7 +48,7 @@ public class Application {
 	// requests to the web container.
 	@Bean
     public MultipartConfigElement multipartConfigElement() {
-		// Setup the application container to be accept multipart requests
+		// Setup the application container to accept multipart requests
 		final MultiPartConfigFactory factory = new MultiPartConfigFactory();
 		// Place upper bounds on the size of the requests to ensure that
 		// clients don't abuse the web container by sending huge requests
@@ -61,5 +58,4 @@ public class Application {
 		// Return the configuration to setup multipart in the container
 		return factory.createMultipartConfig();
 	}
-
 }
