@@ -25,12 +25,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import retrofit.client.Response;
 import retrofit.http.Multipart;
-import retrofit.http.Part;
 import retrofit.http.Streaming;
-import retrofit.mime.TypedFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,9 +35,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -53,7 +47,7 @@ public class VideoController {
 
     private static final AtomicLong currentId = new AtomicLong(0L);
 
-    private Map<Long,Video> videos = new HashMap<Long, Video>();
+    private Map<Long,Video> videos = new HashMap<>();
 
     public Video save(Video entity) {
         checkAndSetId(entity);
