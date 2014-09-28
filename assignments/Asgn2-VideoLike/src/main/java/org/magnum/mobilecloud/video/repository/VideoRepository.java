@@ -21,24 +21,22 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 // 3. Get a specific video by sending a GET request to /video/{videoId}
 //    (e.g., /video/1 would return the JSON for the video with id=1)
 // 4. Send search requests to our findByXYZ methods to /video/search/findByXYZ
-//    (e.g., /video/search/findByName?title=Foo)
+//    (e.g., /video/search/findByName?name=Foo)
 //
 @RepositoryRestResource(path = VideoSvcApi.VIDEO_SVC_PATH)
 public interface VideoRepository extends CrudRepository<Video, Long>{
 
 	// Find all videos with a matching title (e.g., Video.name)
 	public Collection<Video> findByName(
-			// The @Param annotation tells Spring Data Rest which HTTP request
-			// parameter it should use to fill in the "title" variable used to
-			// search for Videos
-			@Param(VideoSvcApi.TITLE_PARAMETER) String title);
+			// The @Param annotation tells tells Spring Data Rest which HTTP request
+			// parameter it should use to fill in the "name" variable used to search for Videos
+            @Param(VideoSvcApi.NAME_PARAMETER) String name);
 
 	// Find all videos that are shorter than a specified duration
 	public Collection<Video> findByDurationLessThan(
 			// The @Param annotation tells tells Spring Data Rest which HTTP request
-			// parameter it should use to fill in the "duration" variable used to
-			// search for Videos
-			@Param(VideoSvcApi.DURATION_PARAMETER) long maxduration);
+			// parameter it should use to fill in the "duration" variable used to search for Videos
+            @Param(VideoSvcApi.DURATION_PARAMETER) long duration);
 
 	/*
 	 * See: http://docs.spring.io/spring-data/jpa/docs/1.3.0.RELEASE/reference/html/jpa.repositories.html
