@@ -77,9 +77,7 @@ public class ResourcesMapper extends ObjectMapper {
 	// Resources objects into JSON. Resources are objects that Spring Data Rest
 	// creates with the Videos it obtains from your VideoRepository
 	@SuppressWarnings("rawtypes")
-	private JsonSerializer<Resources> serializer =
-            new com.fasterxml.jackson.databind.JsonSerializer<Resources>()
-        {
+	private JsonSerializer<Resources> serializer = new JsonSerializer<Resources>() {
             // We are going to register this class to handle all instances of type Resources
             @Override
             public Class<Resources> handledType() {
@@ -88,7 +86,7 @@ public class ResourcesMapper extends ObjectMapper {
 
             @Override
             public void serialize(Resources value, JsonGenerator jgen, SerializerProvider provider)
-                throws IOException, JsonProcessingException
+                throws IOException
             {
                 // Extracted the actual data inside of the Resources object
                 // that we care about (e.g., the list of Video objects)

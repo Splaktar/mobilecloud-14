@@ -87,12 +87,16 @@ public class Video {
 		this.likes = likes;
 	}
 
-    public Collection<String> getLikedby() {
-        return likedby;
+    public void addLikedby(String username) {
+         likedby.add(username);
     }
 
-    public void setLikedby(Collection<String> likedby) {
-        this.likedby = new HashSet<>(likedby);
+    public void removeLikedby(String username) {
+        likedby.remove(username);
+    }
+
+    public Collection<String> getLikedby() {
+        return likedby;
     }
 	
 	/**
