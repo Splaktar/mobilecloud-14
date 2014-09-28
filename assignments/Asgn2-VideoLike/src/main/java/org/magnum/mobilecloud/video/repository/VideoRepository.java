@@ -27,10 +27,10 @@ import java.util.Collection;
 public interface VideoRepository extends CrudRepository<Video, Long> {
 
 	// Find all videos with a matching title (e.g., Video.name)
-	public Collection<Video> findByName(
+	public Collection<Video> findByTitle(
 			// The @Param annotation tells tells Spring Data Rest which HTTP request
 			// parameter it should use to fill in the "name" variable used to search for Videos
-            @Param(VideoSvcApi.NAME_PARAMETER) String name);
+            @Param(VideoSvcApi.TITLE_PARAMETER) String name);
 
 	// Find all videos that are shorter than a specified duration
 	public Collection<Video> findByDurationLessThan(

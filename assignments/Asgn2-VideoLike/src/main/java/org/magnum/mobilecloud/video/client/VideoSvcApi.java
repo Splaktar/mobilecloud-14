@@ -134,7 +134,7 @@ import retrofit.http.Query;
  */
 public interface VideoSvcApi {
 
-	public static final String NAME_PARAMETER = "name";
+	public static final String TITLE_PARAMETER = "name";
 	
 	public static final String DURATION_PARAMETER = "duration";
 
@@ -165,7 +165,7 @@ public interface VideoSvcApi {
 	public Void unlikeVideo(@Path("id") long id);
 	
 	@GET(VIDEO_TITLE_SEARCH_PATH)
-	public Collection<Video> findByName(@Query(NAME_PARAMETER) String name);
+	public Collection<Video> findByTitle(@Query(TITLE_PARAMETER) String name);
 	
 	@GET(VIDEO_DURATION_SEARCH_PATH)
 	public Collection<Video> findByDurationLessThan(@Query(DURATION_PARAMETER) long duration);

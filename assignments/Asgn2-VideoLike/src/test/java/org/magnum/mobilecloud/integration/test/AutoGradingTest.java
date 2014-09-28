@@ -326,7 +326,7 @@ public class AutoGradingTest {
 		}
 
 		// Search for "The Cat"
-		Collection<Video> searchResults = readWriteVideoSvcUser1.findByName(names[0]);
+		Collection<Video> searchResults = readWriteVideoSvcUser1.findByTitle(names[0]);
 		assertTrue(searchResults.size() > 0);
 
 		// Make sure all the returned videos have "The Cat" for their title
