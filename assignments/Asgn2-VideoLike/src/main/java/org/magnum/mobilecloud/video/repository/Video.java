@@ -2,6 +2,13 @@ package org.magnum.mobilecloud.video.repository;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * A simple object to represent a video and its URL for viewing.
  * 
@@ -16,17 +23,20 @@ import com.google.common.base.Objects;
  * 
  * @author mitchell
  */
+@Entity
 public class Video {
 
+    @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	private String name;
 	private String url;
 	private long duration;
 	private long likes;
+    private Set<String> likedby;
 	
-	public Video() {
-	}
+	public Video() {}
 
 	public Video(String name, String url, long duration, long likes) {
 		super();
@@ -34,6 +44,7 @@ public class Video {
 		this.url = url;
 		this.duration = duration;
 		this.likes = likes;
+        likedby = new HashSet<>();
 	}
 
 	public String getName() {
@@ -75,11 +86,18 @@ public class Video {
 	public void setLikes(long likes) {
 		this.likes = likes;
 	}
+
+    public Set<String> getLikedby() {
+        return likedby;
+    }
+
+    public void setLikedby(Set<String> likedby) {
+        this.likedby = likedby;
+    }
 	
 	/**
 	 * Two Videos will generate the same hashcode if they have exactly the same
 	 * values for their name, url, and duration.
-	 * 
 	 */
 	@Override
 	public int hashCode() {
@@ -90,7 +108,6 @@ public class Video {
 	/**
 	 * Two Videos are considered equal if they have exactly the same values for
 	 * their name, url, and duration.
-	 * 
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -104,5 +121,4 @@ public class Video {
 			return false;
 		}
 	}
-
 }
