@@ -76,9 +76,7 @@ public class OAuth2SecurityConfiguration {
 		public void configure(HttpSecurity http) throws Exception {
 
 			http.csrf().disable();
-
-			http.authorizeRequests()
-				.antMatchers("/oauth/token").anonymous();
+			http.authorizeRequests().antMatchers("/oauth/token").anonymous();
 
 			// If you were going to reuse this class in another
 			// application, this is one of the key sections that you
@@ -103,8 +101,7 @@ public class OAuth2SecurityConfiguration {
 	@Configuration
 	@EnableAuthorizationServer
 	@Order(Ordered.LOWEST_PRECEDENCE - 100)
-	protected static class OAuth2Config extends
-			AuthorizationServerConfigurerAdapter {
+	protected static class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
 		// Delegate the processing of Authentication requests to the framework
 		@Autowired
@@ -132,14 +129,12 @@ public class OAuth2SecurityConfiguration {
 
 			// Create a service that has the credentials for all our clients
 			ClientDetailsService csvc = new InMemoryClientDetailsServiceBuilder()
-					// Create a client that has "read" and "write" access to the
-			        // video service
+					// Create a client that has "read" and "write" access to the video service
 					.withClient("mobile").authorizedGrantTypes("password")
 					.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
 					.scopes("read","write").resourceIds("video")
 					.and()
-					// Create a second client that only has "read" access to the
-					// video service
+					// Create a second client that only has "read" access to the video service
 					.withClient("mobileReader").authorizedGrantTypes("password")
 					.authorities("ROLE_CLIENT")
 					.scopes("read").resourceIds("video")
@@ -179,8 +174,7 @@ public class OAuth2SecurityConfiguration {
 		 * to process authentication requests.
 		 */
 		@Override
-		public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-				throws Exception {
+		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 			endpoints.authenticationManager(authenticationManager);
 		}
 

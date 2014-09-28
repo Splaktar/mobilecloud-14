@@ -22,12 +22,15 @@ import org.magnum.mobilecloud.video.repository.Video;
 import org.magnum.mobilecloud.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Collection;
 
 @Controller
@@ -53,26 +56,25 @@ public class VideoController {
         return video;
     }
 
-//	@RequestMapping(value = VideoSvcApi.VIDEO_SVC_PATH, method = RequestMethod.POST)
-//	public Video addVideo(@Body Video v) {
-//        System.out.println("Adding video " + v.getName());
-//        return videos.save(v);
-//    }
-
 	@RequestMapping(value = VideoSvcApi.VIDEO_SVC_PATH + "/{id}/like", method = RequestMethod.POST)
-    public Void likeVideo(@PathVariable("id") long id, HttpServletRequest request) {
+    public ResponseEntity<Void> likeVideo(@PathVariable("id") long id, Principal principal) {
         Video video = getVideo(id);
+
+        if (video.getLikedby().contains(principal.getName())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         video.setLikes(video.getLikes() + 1L);
-        video.addLikedby(request.getRemoteUser());
+        video.addLikedby(principal.getName());
         videos.save(video);
         return null;
     }
 
 	@RequestMapping(value = VideoSvcApi.VIDEO_SVC_PATH + "/{id}/unlike", method = RequestMethod.POST)
-    public Void unlikeVideo(@PathVariable("id") long id, HttpServletRequest request) {
+    public Void unlikeVideo(@PathVariable("id") long id, Principal principal) {
         Video video = getVideo(id);
         video.setLikes(video.getLikes() - 1L);
-        video.removeLikedby(request.getRemoteUser());
+        video.removeLikedby(principal.getName());
         videos.save(video);
         return null;
     }

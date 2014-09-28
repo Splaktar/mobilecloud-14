@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.magnum.mobilecloud.video.json.ResourcesMapper;
+import org.magnum.mobilecloud.video.repository.Video;
 import org.magnum.mobilecloud.video.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -46,8 +48,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class Application extends RepositoryRestMvcConfiguration {
 	// Tell Spring to launch our app!
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
 	}
+
+    protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+        config.setReturnBodyOnCreate(true);
+        config.exposeIdsFor(Video.class);
+    }
 
     // We are overriding the bean that RepositoryRestMvcConfiguration
 	// is using to convert our objects into JSON so that we can control
