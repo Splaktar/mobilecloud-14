@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -71,8 +72,13 @@ public class VideoController {
     }
 
 	@RequestMapping(value = VideoSvcApi.VIDEO_SVC_PATH + "/{id}/unlike", method = RequestMethod.POST)
-    public Void unlikeVideo(@PathVariable("id") long id, Principal principal) {
+    public ResponseEntity<Void> unlikeVideo(@PathVariable("id") long id, Principal principal) {
         Video video = getVideo(id);
+
+        if (!video.getLikedby().contains(principal.getName())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         video.setLikes(video.getLikes() - 1L);
         video.removeLikedby(principal.getName());
         videos.save(video);
@@ -80,7 +86,7 @@ public class VideoController {
     }
 
 	@RequestMapping(value = VideoSvcApi.VIDEO_SVC_PATH + "/{id}/likedby", method = RequestMethod.GET)
-    public Collection<String> getUsersWhoLikedVideo(@PathVariable("id") long id) {
+    public @ResponseBody Collection<String> getUsersWhoLikedVideo(@PathVariable("id") long id) {
         Video video = getVideo(id);
         return video.getLikedby();
     }
